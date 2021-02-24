@@ -6,6 +6,7 @@ image
 @author: chineseocr
 """
 
+import os
 import json
 import base64
 import numpy as np
@@ -30,12 +31,32 @@ def base64_to_PIL(string):
             return img
     except:
         return None
-    
+
+
+def nparray2base64(data):
+    if type(data) == list:
+        result = []
+        for d in data:
+            _, buf = cv2.imencode('.jpg', d)
+            result.append(str(base64.b64encode(buf), 'utf-8'))
+        return result
+
+    _, d = cv2.imencode('.jpg', data)
+    return str(base64.b64encode(d), 'utf-8')
+
+
 def read_json(p):
     with open(p) as f:
         jsonData = json.loads(f.read())
     shapes = jsonData.get('shapes')
     imageData = jsonData.get('imageData')
+
+    if imageData is None:
+        path, name = os.path.split(p)
+        imagePath = jsonData.get('imagePath')
+        img = cv2.imread(os.path.join(path, imagePath))
+        imageData = nparray2base64(img)
+
     lines = []
     labels = []
     for shape in shapes:
@@ -151,6 +172,8 @@ def fill_lines(img,lines,linetype=2):
 
 def get_img_label(p,size,linetype=1):
     img,lines,labels = read_json(p)
+    print("img:",img,"labels:",labels)
+    print(img.size)
     img,lines=img_resize(img,lines,target_size=512,max_size=1024)
     img,lines,labels =img_argument(img,lines,labels,size)
     img,lines,labels=get_random_data(img,lines,labels, size=size)
@@ -242,6 +265,7 @@ def gen(paths,batchsize=2,linetype=2):
             i+=1
             
             #linetype=2
+            print("p:",p)
             img,lines,labelImg=get_img_label(p,size=(size,size),linetype=linetype)
             X[j] = img
             Y[j] =  labelImg
