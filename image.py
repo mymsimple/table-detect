@@ -172,8 +172,6 @@ def fill_lines(img,lines,linetype=2):
 
 def get_img_label(p,size,linetype=1):
     img,lines,labels = read_json(p)
-    print("img:",img,"labels:",labels)
-    print(img.size)
     img,lines=img_resize(img,lines,target_size=512,max_size=1024)
     img,lines,labels =img_argument(img,lines,labels,size)
     img,lines,labels=get_random_data(img,lines,labels, size=size)
