@@ -17,3 +17,8 @@ buil
 __pycache__
 dump.rdb
 define
+test
+data
+models
+logs
+.idea/
