@@ -263,7 +263,6 @@ def gen(paths,batchsize=2,linetype=2):
             i+=1
             
             #linetype=2
-            print("p:",p)
             img,lines,labelImg=get_img_label(p,size=(size,size),linetype=linetype)
             X[j] = img
             Y[j] =  labelImg
