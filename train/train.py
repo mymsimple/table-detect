@@ -43,7 +43,7 @@ def train():
                         validation_data=testloader,
                         validation_steps=16,#len(testP) // batchsize,
                         epochs=30,
-                        works=6)
+                        workers=6)
 
 
 if __name__=='__main__':
