@@ -22,9 +22,9 @@ CUDA_VISIBLE_DEVICES=0
 def train():
     #logger.info("所有的参数：%r", args)
 
-    filepath = './models/table-line-fine.h5'  ##模型权重存放位置
-    paths = glob('./data/train/*.json')  ##table line dataset label with labelme
-
+    filepath = 'models/table-line-fine.h5'  ##模型权重存放位置
+    paths = glob('data/train/*.json')  ##table line dataset label with labelme
+    logger.info("加载数据：%r条",len(paths))
     checkpointer = ModelCheckpoint(filepath=filepath, monitor='loss', verbose=0, save_weights_only=True,
                                    save_best_only=True)
     rlu = ReduceLROnPlateau(monitor='loss', factor=0.1, patience=5, verbose=0, mode='auto', cooldown=0, min_lr=0)
