@@ -33,12 +33,12 @@ def train():
     trainP, testP = train_test_split(paths, test_size=0.1)
     logger.info('total:%r, train:%r, test:%r', len(paths),len(trainP),len(testP))
 
-    batchsize = 24
+    batchsize = 6
     trainloader = gen(trainP, batchsize=batchsize, linetype=1)
     testloader = gen(testP, batchsize=batchsize, linetype=1)
 
     model.fit_generator(trainloader,
-                        steps_per_epoch=len(trainP) // batchsize,
+                        steps_per_epoch=100,#len(trainP) // batchsize,
                         callbacks=[checkpointer],
                         validation_data=testloader,
                         validation_steps=len(testP) // batchsize,
