@@ -38,12 +38,12 @@ def train():
     testloader = gen(testP, batchsize=batchsize, linetype=1)
 
     model.fit_generator(trainloader,
-                        steps_per_epoch=64,#len(trainP) // batchsize,
+                        steps_per_epoch=48,#len(trainP) // batchsize,
                         callbacks=[checkpointer],
                         validation_data=testloader,
                         validation_steps=16,#len(testP) // batchsize,
-                        epochs=30,
-                        workers=6)
+                        epochs=12,
+                        workers=12)
 
 
 if __name__=='__main__':
