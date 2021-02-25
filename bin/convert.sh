@@ -1,8 +1,8 @@
 
 #!/bin/bash
 
-weight_path=models/table-line.h5
-output_path=models/table-line
+weight_path=models/table-line-fine.h5
+output_path=models/table-line/100000
 
 echo "要转换的模型："  $weight_path
 echo "转换后的路径："  $output_path

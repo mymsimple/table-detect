@@ -120,65 +120,36 @@ def get_table_line(binimg,axis=0,lineW=10):
 def sqrt(p1,p2):
         return np.sqrt((p1[0]-p2[0])**2+(p1[1]-p2[1])**2)
     
-def adjust_lines(RowsLines,ColsLines,alph=50):
+def adjust_lines(Lines,alph=50):
     ##调整line
+    n = len(Lines)
+    newLines =[]
 
-    
-    nrow = len(RowsLines)
-    ncol = len(ColsLines)
-    newRowsLines =[]
-    newColsLines =[]
-    for i in range(nrow):
-        
-        x1,y1,x2,y2 = RowsLines[i]
+    for i in range(n):
+        x1,y1,x2,y2 = Lines[i]
         cx1,cy1 = (x1+x2)/2,(y1+y2)/2
-        for j in range(nrow):
+        for j in range(n):
             if i!=j:
-                x3,y3,x4,y4 = RowsLines[j]
+                x3,y3,x4,y4 = Lines[j]
                 cx2,cy2 = (x3+x4)/2,(y3+y4)/2
-                if  (x3<cx1<x4 or y3<cy1<y4 ) or ( x1<cx2<x2 or y1<cy2<y2):
+                if (x3<cx1<x4 or y3<cy1<y4 ) or ( x1<cx2<x2 or y1<cy2<y2):
                     continue
                 else:
                     r = sqrt((x1,y1),(x3,y3))
                     if r<alph:
-                        newRowsLines.append([x1,y1,x3,y3])
+                        newLines.append([x1,y1,x3,y3])
                     r = sqrt((x1,y1),(x4,y4))
                     if r<alph:
-                        newRowsLines.append([x1,y1,x4,y4])
+                        newLines.append([x1,y1,x4,y4])
                     
                     r = sqrt((x2,y2),(x3,y3))
                     if r<alph:
-                        newRowsLines.append([x2,y2,x3,y3])
+                        newLines.append([x2,y2,x3,y3])
                     r = sqrt((x2,y2),(x4,y4))
                     if r<alph:
-                        newRowsLines.append([x2,y2,x4,y4])
-                        
-                        
-    for i in range(ncol):
-        x1,y1,x2,y2 = ColsLines[i]
-        cx1,cy1 = (x1+x2)/2,(y1+y2)/2
-        for j in range(ncol):
-            if i!=j:
-                x3,y3,x4,y4 = ColsLines[j]
-                cx2,cy2 = (x3+x4)/2,(y3+y4)/2
-                if  (x3<cx1<x4 or y3<cy1<y4 ) or ( x1<cx2<x2 or y1<cy2<y2):
-                    continue
-                else:
-                    r = sqrt((x1,y1),(x3,y3))
-                    if r<alph:
-                        newColsLines.append([x1,y1,x3,y3])
-                    r = sqrt((x1,y1),(x4,y4))
-                    if r<alph:
-                        newColsLines.append([x1,y1,x4,y4])
-                    
-                    r = sqrt((x2,y2),(x3,y3))
-                    if r<alph:
-                        newColsLines.append([x2,y2,x3,y3])
-                    r = sqrt((x2,y2),(x4,y4))
-                    if r<alph:
-                        newColsLines.append([x2,y2,x4,y4])
-                        
-    return newRowsLines,newColsLines
+                        newLines.append([x2,y2,x4,y4])
+
+    return newLines
 
 
 def minAreaRect(coords):
@@ -244,14 +215,13 @@ def line_to_line(points1,points2,alpha=10):
     
     if (flag1>0 and flag2>0) or (flag1<0 and flag2<0):
         
-        x =  (B1*C2-B2*C1)/(A1*B2-A2*B1)
-        y =  (A2*C1-A1*C2)/(A1*B2-A2*B1)
-        p =  (x,y)
+        x = (B1*C2-B2*C1)/(A1*B2-A2*B1)
+        y = (A2*C1-A1*C2)/(A1*B2-A2*B1)
+        p = (x,y)
         r0 = sqrt(p,(x1,y1))
         r1 = sqrt(p,(x2,y2))
         
         if min(r0,r1)<alpha:
-            
             if r0<r1:
                  points1 = [p[0],p[1],x2,y2]
             else:

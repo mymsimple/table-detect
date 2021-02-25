@@ -7,7 +7,8 @@ Created on Thu Sep 9 23:11:51 2020
 """
 
 tableModelDetectPath = 'models/table-detect.weights'
-tableModeLinePath    = "models/table-line.h5"
+tableModeLinePath = "models/table-line.h5"
+
 DIR_TBOARD = "logs/tboard"
 
 

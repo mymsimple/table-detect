@@ -36,20 +36,20 @@ def train():
     checkpointer = ModelCheckpoint(filepath=filepath, monitor='loss', verbose=0, save_weights_only=True,
                                    save_best_only=True)
     rlu = ReduceLROnPlateau(monitor='loss', factor=0.1, patience=5, verbose=0, mode='auto', cooldown=0, min_lr=0)
-    model.compile(optimizer=Adam(lr=0.0001), loss='binary_crossentropy', metrics=['acc'])
+    model.compile(optimizer=Adam(lr=0.00001), loss='binary_crossentropy', metrics=['acc'])
 
     trainP, testP = train_test_split(paths, test_size=0.15)
     logger.info('total:%r, train:%r, test:%r', len(paths),len(trainP),len(testP))
 
     batchsize = 4
-    trainloader = gen(trainP, batchsize=batchsize, linetype=2)
-    testloader = gen(testP, batchsize=batchsize, linetype=2)
+    trainloader = gen(trainP, batchsize=batchsize, linetype=4)
+    testloader = gen(testP, batchsize=batchsize, linetype=4)
 
     model.fit_generator(generator=trainloader,
-                        steps_per_epoch=120,#max(1, len(trainP) // batchsize),
+                        steps_per_epoch=100,#max(1, len(trainP) // batchsize),
                         callbacks=[TensorBoard(log_dir=tb_log_name), checkpointer],
                         use_multiprocessing=True,
-                        epochs=100,
+                        epochs=120,
                         workers=10,
                         validation_data=testloader,
                         validation_steps=20#max(1, len(testP) // batchsize)
