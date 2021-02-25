@@ -7,10 +7,10 @@ table detect with yolo
 """
 import cv2
 import numpy as np
-from config import tableModelDetectPath
-from utils import nms_box,letterbox_image,rectangle
+from utils.config import tableModelDetectPath
+from utils.utils import nms_box,letterbox_image,rectangle
 
-tableDetectNet  = cv2.dnn.readNetFromDarknet(tableModelDetectPath.replace('.weights','.cfg'),tableModelDetectPath)#
+tableDetectNet = cv2.dnn.readNetFromDarknet(tableModelDetectPath.replace('.weights','.cfg'),tableModelDetectPath)#
 
 def table_detect(img,sc=(416,416),thresh=0.5,NMSthresh=0.3):
     """
@@ -105,7 +105,7 @@ if __name__=='__main__':
     import time
     p = 'img/table-detect.jpg'
     img = cv2.imread(p)
-    t =time.time()
+    t = time.time()
     boxes,adBoxes,scores=table_detect(img, sc=(416, 416),thresh=0.5,NMSthresh=0.3)
     print(time.time()-t,boxes,adBoxes,scores)
     img = rectangle(img,adBoxes)

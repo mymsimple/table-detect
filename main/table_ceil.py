@@ -8,9 +8,9 @@ table ceil
 
 import cv2
 import numpy as np
-from utils              import minAreaRectbox,measure,eval_angle,draw_lines
-from table_detect import table_detect
-from table_line   import table_line
+from utils.utils import minAreaRectbox,measure,eval_angle,draw_lines
+from main.table_detect import table_detect
+from main.table_line import table_line
 
 class table:
    def __init__(self,img,tableSize = (416, 416),tableLineSize=(1024,1024),isTableDetect=False):
@@ -79,10 +79,10 @@ class table:
         
 if __name__=='__main__':
     import time
-    from utils import draw_boxes
+    from utils.utils import draw_boxes
     p = 'img/table-detect.jpg'
     img = cv2.imread(p)
-    t =time.time()
+    t = time.time()
     
     tableDetect = table(img)
     tableCeilBoxes = tableDetect.tableCeilBoxes

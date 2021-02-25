@@ -161,11 +161,11 @@ def table_net(input_shape=(512, 512, 3),num_classes=1):
 
     return model
 
-from config import tableModeLinePath
-from utils import letterbox_image,get_table_line,adjust_lines,line_to_line
+
+from utils.config import tableModeLinePath
+from utils.utils import letterbox_image,get_table_line,adjust_lines,line_to_line
 import numpy as np
 import cv2
-
 
 
 model = table_net((None,None,3),2)
@@ -226,7 +226,7 @@ def table_line(img,size=(512,512),hprob=0.5,vprob=0.5,row=50,col=10,alph=15):
 if __name__ == '__main__':
     import time
     p = 'data/test/2022101071141114476100012K6-1.jpg'
-    from utils import draw_lines
+    from utils.utils import draw_lines
     img = cv2.imread(p)
     t = time.time()
     rowboxes, colboxes = table_line(img[...,::-1], size=(1024,1024), hprob=0.5, vprob=0.5)

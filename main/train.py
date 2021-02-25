@@ -7,13 +7,13 @@ Created on Thu Sep 9 23:11:51 2020
 """
 import sys
 sys.path.append('.')
-from table_line import model
+from main.table_line import model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import TensorBoard,EarlyStopping,ModelCheckpoint,ReduceLROnPlateau
 from sklearn.model_selection import train_test_split
 from glob import glob
-from image import gen
-import config as conf
+from utils.image import gen
+import utils.config as conf
 import time
 import logging
 
