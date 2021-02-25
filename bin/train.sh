@@ -13,6 +13,6 @@ GPU=0
 #exit
 
 nohup \
-python -m train.train \
+python -m main.train \
 >> ./logs/console_$Date.log 2>&1 &
 echo "启动完毕,在logs下查看日志！"
