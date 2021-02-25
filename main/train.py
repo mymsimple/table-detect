@@ -46,10 +46,10 @@ def train():
     testloader = gen(testP, batchsize=batchsize, linetype=2)
 
     model.fit_generator(generator=trainloader,
-                        steps_per_epoch=100,#max(1, len(trainP) // batchsize),
+                        steps_per_epoch=max(1, len(trainP) // batchsize),
                         callbacks=[TensorBoard(log_dir=tb_log_name), checkpointer],
                         use_multiprocessing=True,
-                        epochs=100,
+                        epochs=120,
                         workers=10,
                         validation_data=testloader,
                         validation_steps=20#max(1, len(testP) // batchsize)
