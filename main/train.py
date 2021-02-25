@@ -41,18 +41,18 @@ def train():
     trainP, testP = train_test_split(paths, test_size=0.15)
     logger.info('total:%r, train:%r, test:%r', len(paths),len(trainP),len(testP))
 
-    batchsize = 8
-    trainloader = gen(trainP, batchsize=batchsize, linetype=4)
-    testloader = gen(testP, batchsize=batchsize, linetype=4)
+    batchsize = 6
+    trainloader = gen(trainP, batchsize=batchsize, linetype=2)
+    testloader = gen(testP, batchsize=batchsize, linetype=2)
 
     model.fit_generator(generator=trainloader,
-                        steps_per_epoch=max(1, len(trainP) // batchsize),
+                        steps_per_epoch=100,#max(1, len(trainP) // batchsize),
                         callbacks=[TensorBoard(log_dir=tb_log_name), checkpointer],
                         use_multiprocessing=True,
                         epochs=100,
                         workers=10,
                         validation_data=testloader,
-                        validation_steps=max(1, len(testP) // batchsize)
+                        validation_steps=20#max(1, len(testP) // batchsize)
                         )
 
 
