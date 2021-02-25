@@ -1,3 +1,8 @@
+
+# 2021.01 mym在此基础上作了修改
+
+
+
 # table-detect
 ## table detect(yolo) , table line(unet) （表格检测/表格单元格定位）
 links: http://59.110.234.163:9990/static/models/table-detect/   
