@@ -41,7 +41,7 @@ def train():
     trainP, testP = train_test_split(paths, test_size=0.15)
     logger.info('total:%r, train:%r, test:%r', len(paths),len(trainP),len(testP))
 
-    batchsize = 6
+    batchsize = 4
     trainloader = gen(trainP, batchsize=batchsize, linetype=2)
     testloader = gen(testP, batchsize=batchsize, linetype=2)
 
