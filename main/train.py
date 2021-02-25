@@ -38,18 +38,18 @@ def train():
     rlu = ReduceLROnPlateau(monitor='loss', factor=0.1, patience=5, verbose=0, mode='auto', cooldown=0, min_lr=0)
     model.compile(optimizer=Adam(lr=0.0001), loss='binary_crossentropy', metrics=['acc'])
 
-    trainP, testP = train_test_split(paths, test_size=0.1)
+    trainP, testP = train_test_split(paths, test_size=0.15)
     logger.info('total:%r, train:%r, test:%r', len(paths),len(trainP),len(testP))
 
-    batchsize = 4
-    trainloader = gen(trainP, batchsize=batchsize, linetype=1)
-    testloader = gen(testP, batchsize=batchsize, linetype=1)
+    batchsize = 8
+    trainloader = gen(trainP, batchsize=batchsize, linetype=4)
+    testloader = gen(testP, batchsize=batchsize, linetype=4)
 
     model.fit_generator(generator=trainloader,
                         steps_per_epoch=max(1, len(trainP) // batchsize),
                         callbacks=[TensorBoard(log_dir=tb_log_name), checkpointer],
                         use_multiprocessing=True,
-                        epochs=30,
+                        epochs=100,
                         workers=10,
                         validation_data=testloader,
                         validation_steps=max(1, len(testP) // batchsize)

@@ -225,7 +225,7 @@ def table_line(img,size=(512,512),hprob=0.5,vprob=0.5,row=50,col=10,alph=15):
 
 if __name__ == '__main__':
     import time
-    p = 'data/test/2022101071141114476100012K6-1.jpg'
+    p = 'data/test/FFDDC496-8B4F-9018-B5BA-0298689D184EU1-1.jpg'
     from utils.utils import draw_lines
     img = cv2.imread(p)
     t = time.time()
@@ -233,4 +233,4 @@ if __name__ == '__main__':
     img = draw_lines(img, rowboxes+colboxes, color=(255,0,0), lineW=2)
     
     print(time.time()-t, len(rowboxes), len(colboxes))
-    cv2.imwrite('data/result/2022101071141114476100012K6-1-line.png', img)
+    cv2.imwrite('data/result/FFDDC496-8B4F-9018-B5BA-0298689D184EU1-1-line-2.png', img)
