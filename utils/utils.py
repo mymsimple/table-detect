@@ -214,18 +214,18 @@ def line_to_line(points1,points2,alpha=10):
     flag2 = point_line_cor([x2,y2],A2,B2,C2)
     
     if (flag1>0 and flag2>0) or (flag1<0 and flag2<0):
-        
-        x = (B1*C2-B2*C1)/(A1*B2-A2*B1)
-        y = (A2*C1-A1*C2)/(A1*B2-A2*B1)
-        p = (x,y)
-        r0 = sqrt(p,(x1,y1))
-        r1 = sqrt(p,(x2,y2))
-        
-        if min(r0,r1)<alpha:
-            if r0<r1:
-                 points1 = [p[0],p[1],x2,y2]
-            else:
-                 points1 = [x1,y1,p[0],p[1]]
+        if A1*B2-A2*B1 != 0:
+            x = (B1*C2-B2*C1)/(A1*B2-A2*B1)
+            y = (A2*C1-A1*C2)/(A1*B2-A2*B1)
+            p = (x,y)
+            r0 = sqrt(p,(x1,y1))
+            r1 = sqrt(p,(x2,y2))
+
+            if min(r0,r1)<alpha:
+                if r0<r1:
+                     points1 = [p[0],p[1],x2,y2]
+                else:
+                     points1 = [x1,y1,p[0],p[1]]
                  
     return points1
 
