@@ -17,7 +17,7 @@ import utils.config as conf
 import time
 import logging
 
-logger = logging.getLogger("Train")
+logger = logging.getLogger("Table-Detect")
 
 CUDA_VISIBLE_DEVICES=0
 
@@ -31,30 +31,28 @@ def train():
     filepath = 'models/table-line-fine.h5'  ##模型权重存放位置
 
     paths = glob('data/train/*.json')  ##table line dataset label with labelme
-    print("加载数据:",len(paths))
+    print("加载数据:", len(paths))
 
-    checkpointer = ModelCheckpoint(filepath=filepath,
+    Checkpointer = ModelCheckpoint(filepath=filepath,
                                    monitor='loss',
                                    verbose=0,
                                    save_weights_only=True,
                                    save_best_only=True)
-
-    EarlyStop = EarlyStopping(monitor='val_accuracy',
+    EarlyStop = EarlyStopping(monitor='loss',
                               patience=2, verbose=1, mode='auto')
     # 减小学习率
-    Reduce = ReduceLROnPlateau(monitor='val_accuracy',
+    Reduce = ReduceLROnPlateau(monitor='loss',
                                factor=0.1,
-                               patience=1,
+                               patience=5,
                                verbose=1,
                                mode='auto',
                                epsilon=0.0001,
                                cooldown=0,
                                min_lr=0)
-    #Reduce = ReduceLROnPlateau(monitor='loss', factor=0.1, patience=5, verbose=0, mode='auto', cooldown=0, min_lr=0)
 
     model.compile(optimizer=Adam(lr=0.0001), loss='binary_crossentropy', metrics=['acc'])
 
-    trainP, testP = train_test_split(paths, test_size=0.15)
+    trainP, testP = train_test_split(paths, test_size=0.12)
     logger.info('total:%r, train:%r, test:%r', len(paths), len(trainP), len(testP))
 
     batchsize = 4
@@ -62,13 +60,13 @@ def train():
     testloader = gen(testP, batchsize=batchsize, linetype=2)
 
     model.fit_generator(generator=trainloader,
-                        steps_per_epoch=100,#max(1, len(trainP) // batchsize),
-                        callbacks=[TensorBoard(log_dir=tb_log_name), checkpointer, EarlyStop, Reduce],
+                        steps_per_epoch=max(1, len(trainP) // batchsize),
+                        callbacks=[TensorBoard(log_dir=tb_log_name), Checkpointer, EarlyStop, Reduce],
                         use_multiprocessing=True,
-                        epochs=200,
+                        epochs=150,
                         workers=10,
                         validation_data=testloader,
-                        validation_steps=20#max(1, len(testP) // batchsize)
+                        validation_steps=max(1, len(testP) // batchsize)
                         )
 
 
