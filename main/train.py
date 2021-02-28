@@ -51,6 +51,7 @@ def train():
                                cooldown=0,
                                min_lr=0)
     #Reduce = ReduceLROnPlateau(monitor='loss', factor=0.1, patience=5, verbose=0, mode='auto', cooldown=0, min_lr=0)
+
     model.compile(optimizer=Adam(lr=0.0001), loss='binary_crossentropy', metrics=['acc'])
 
     trainP, testP = train_test_split(paths, test_size=0.15)
